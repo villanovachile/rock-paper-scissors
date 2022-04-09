@@ -1,58 +1,92 @@
-let userScore = 0;
+
+let playerScore = 0;
 let computerScore = 0;
-let gameRound = 1;
-let totalRounds = 6
 
-for (; gameRound <= totalRounds; gameRound++ ){
-    let userChoice = prompt('Enter rock, paper, or scissors:');
-    if (userChoice == null || userChoice == undefined) {
-        userChoice = null;
-    } else {
-    userChoice = userChoice.toLowerCase().replace(/\s+/g, '');
-    }
-    let computerChoice = Math.floor((Math.random() * 3) + 1);
-    
 
-    
-    if (computerChoice == 1) {
-        computerChoice = 'rock';
-    } else if (computerChoice == 2) {
-        computerChoice = 'paper';
+function computerPlay (){ // randomly select a computer choice
+    let x = Math.floor(Math.random() * 3) + 1;
+    if (x == 1) {
+    return "rock";
+    } else if (x == 2) {
+     return "paper";
     } else {
-        computerChoice = 'scissors';
-    } 
-    
-  
-    if (userChoice !== null && (userChoice =='rock' || userChoice =='paper' || userChoice =='scissors')) {
-    console.log('User chooses ' + userChoice);
-    console.log('Computer chooses ' + computerChoice);
-    } else {
-        userChoice = null;
+     return "scissors";
     }
+}
+
+function playerPlay () { //prompt user's choice and remove spaces/convert to lower case
+    choice = prompt('Enter rock, paper, or scissors:');
+    if (choice !== null) {
+    choice = choice.toLowerCase().replace(/\s+/g, '');
+    }  
+    return choice;
+}
+
+function playRound (playerSelection ,computerSelection) { // compares user's choice with computer & declare's a winner
     
-    if (userChoice=='rock' && computerChoice=='paper' || userChoice=='paper' && computerChoice=='scissors' || userChoice=='scissors' && computerChoice=='rock') {
-        computerScore++
-        console.log ('The user has lost, because ' + userChoice + ' loses to ' + computerChoice + ', with a score of ' + userScore + ' to ' + computerScore);
-        console.log ('Round ' + gameRound + ' of ' + totalRounds)
-    } else if (userChoice==computerChoice) {
-        console.log('It\'s a tie, with a score of ' + userScore + ' to ' + computerScore);
-        console.log ('Round ' + gameRound + ' of ' + totalRounds)
-    } else if (userChoice==null) {
-        console.log('User made an invalid entry, please try again, with a score of ' + userScore + ' to ' + computerScore);
-        console.log ('Round ' + gameRound + ' of ' + totalRounds)
-        gameRound--
+    while (playerSelection !=='rock' || playerSelection !=='paper' || playerSelection !=='scissors'){
+        if (playerSelection !== null && (playerSelection =='rock' || playerSelection =='paper' ||
+                playerSelection =='scissors')) {
+            break;
+        } else if (playerSelection !== null) {
+            console.log(`"${playerSelection}" is an invalid choice, try again`);
+            playerSelection = playerPlay();
+        } else {
+        playerSelection = null;
+            break;
+        }
+    }   
+
+    if (playerSelection=='rock' && computerSelection=='paper' ||
+            playerSelection=='paper' && computerSelection=='scissors' ||
+            playerSelection=='scissors' && computerSelection=='rock') {
+        computerScore++;
+        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `You lose this round! ${computerSelection} beats ${playerSelection}`;
+    } else if (playerSelection==computerSelection) {
+        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `This round is a tie! You and the computer chose ${playerSelection}`;
+    } else if (playerSelection==null) {
+        return null;
     } else {
-        userScore++
-        console.log ('The user has won, because ' + userChoice + ' beats ' + computerChoice + ', with a score of ' + userScore + ' to ' + computerScore);
-        console.log ('Round ' + gameRound + ' of ' + totalRounds)
+        playerScore++;
+        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `You won this round! ${playerSelection} beats ${computerSelection}!`;
         
     }
 }
 
-if (userScore > computerScore) {
-    console.log('The user has beaten the computer with a score of ' + userScore + ' to ' + computerScore)
-    } else if (computerScore > userScore) {
-    console.log('The computer has beaten the user with a score of ' + computerScore + ' to ' + userScore)
-    } else {
-        console.log('The game is a tie with a score of ' + userScore + ' to ' + computerScore);
-    }
+function game(){ // Plays 5 rounds, and concludes an overall winner
+let roundOutCome;
+    for (let i = 1; i <= 5; i++) {
+        roundOutcome = playRound(playerPlay(), computerPlay());
+        
+        if (roundOutcome == null) {
+            break;
+        } else {
+            console.log(roundOutcome);
+        }
+    
+
+
+        console.log(`Round ${i} of 5`);
+        console.log(`Your Score: ${playerScore}`);
+        console.log(`Computer Score: ${computerScore}`);
+        console.log(`===================================`);
+     }
+
+     if (computerScore > playerScore && roundOutcome !== null) {
+         console.log(`The computer has won with a score of ${computerScore} to ${playerScore}`);
+     } else if (computerScore < playerScore && roundOutcome !== null) {
+        console.log(`You've won won with a score of ${playerScore} to ${computerScore}`);
+     } else if (computerScore == playerScore && roundOutcome !== null) {
+        console.log(`It's a tie with a score of ${playerScore} to ${computerScore}`); 
+     } else {
+        console.log(`You have canceled the game`)   
+        
+     }
+
+}
+
+
+game();
