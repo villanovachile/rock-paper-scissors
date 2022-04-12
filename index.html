@@ -8,13 +8,12 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<!--  <script src="./scripts/script.js"></script> -->
 
 <div class="gameArea">
-        <div class="gameTitleArea">
-            <h1 class="gameTitle">Rock, Paper, Scissors</h1>
-        </div>
-        <div class="playArea">
+    <div class="playArea">
+            <div class="gameTitleArea">
+                <h1 class="gameTitle">Rock, Paper, Scissors</h1>
+            </div>
             <div class="outcomeArea">
                 <div class="playerOutcomeArea">
                     <div class="playerOutcomeChoice">
@@ -35,26 +34,27 @@
                 </div>
                 
             </div>
-            <div class="restartGame">
-                <button class="buttons">Restart Game</button>
-            </div>
             
             <div class="playerSelectionArea">
-                <div class="playerSelectionRock">
-                    <p>rock</p>
+                <div id="playerSelectionRock" class="playerSelectionRock playerSelectors">
+                    
                 </div>
-                <div class="playerSelectionPaper">
-                    <p>paper</p>
+                <div id="playerSelectionPaper" class="playerSelectionPaper playerSelectors">
+                    
                 </div>
-                <div class="playerSelectionScissors">
-                    <p>scissors</p>
+                <div id="playerSelectionScissors" class="playerSelectionScissors playerSelectors">
+                    
                 </div>
             </div>
             
-
+            
+            <div class="restartGame">
+                <button id="restartGame" class="buttons">Restart Game</button>
+            </div>
         </div>
 
 </div>
+<script src="./scripts/script.js"></script>
 
 </body>
 </html>
