@@ -1,61 +1,10 @@
 /*
 
-let playerScore = 0;
-let computerScore = 0;
 
 
-function computerPlay (){ // randomly select a computer choice
-    let x = Math.floor(Math.random() * 3) + 1;
-    if (x == 1) {
-    return "rock";
-    } else if (x == 2) {
-     return "paper";
-    } else {
-     return "scissors";
-    }
-}
 
-function playerPlay () { //prompt user's choice and remove spaces/convert to lower case
-    choice = prompt('Enter rock, paper, or scissors:');
-    if (choice !== null) {
-    choice = choice.toLowerCase().replace(/\s+/g, '');
-    }  
-    return choice;
-}
 
-function playRound (playerSelection ,computerSelection) { // compares user's choice with computer & declare's a winner
-    
-    while (playerSelection !=='rock' || playerSelection !=='paper' || playerSelection !=='scissors'){
-        if (playerSelection !== null && (playerSelection =='rock' || playerSelection =='paper' ||
-                playerSelection =='scissors')) {
-            break;
-        } else if (playerSelection !== null) {
-            console.log(`"${playerSelection}" is an invalid choice, try again`);
-            playerSelection = playerPlay();
-        } else {
-        playerSelection = null;
-            break;
-        }
-    }   
 
-    if (playerSelection=='rock' && computerSelection=='paper' ||
-            playerSelection=='paper' && computerSelection=='scissors' ||
-            playerSelection=='scissors' && computerSelection=='rock') {
-        computerScore++;
-        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
-        return `You lose this round! ${computerSelection} beats ${playerSelection}`;
-    } else if (playerSelection==computerSelection) {
-        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
-        return `This round is a tie! You and the computer chose ${playerSelection}`;
-    } else if (playerSelection==null) {
-        return null;
-    } else {
-        playerScore++;
-        console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
-        return `You won this round! ${playerSelection} beats ${computerSelection}!`;
-        
-    }
-}
 
 function game(){ // Plays 5 rounds, and concludes an overall winner
 let roundOutCome;
@@ -94,9 +43,13 @@ game();
 
 */
 
-
+let playerScore = 0;
+let computerScore = 0;
+let gameIsActive = false
 let roundIsActive = false;
 let playerChoice = '';
+let computerChoice = '';
+let computerChoiceDisplay = 'Rock';
 
 
 let playerSelectionRock = document.querySelector('#playerSelectionRock');
@@ -106,8 +59,15 @@ let playerSelectionRockClass = document.querySelector('.playerSelectionRock');
 let playerSelectionPaperClass = document.querySelector('.playerSelectionPaper');
 let playerSelectionScissorsClass = document.querySelector('.playerSelectionScissors');
 let playerOutcomeChoice = document.querySelector('.playerOutcomeChoice');
+let computerOutcomeChoice = document.querySelector('.computerOutcomeChoice');
+let playerOutcomeScore = document.querySelector('#playerScore');
+let computerOutcomeScore = document.querySelector('#computerScore');
+
 
 let playerSelectors = document.getElementsByClassName('playerSelectors')
+
+playerOutcomeScore.textContent = `You: ${playerScore}`;
+computerOutcomeScore.textContent = `Computer: ${computerScore}`;
 
 
 let restartGame = document.querySelector('#restartGame');
@@ -115,18 +75,31 @@ restartGame.addEventListener('click',function(e) {
     roundIsActive = false;
     enableSelections();
     if (playerChoice !=='') {
-    playerOutcomeChoice.classList.remove(`playerOutcomeChoice${playerChoice}`);
-    playerChoice = '';
+        computerOutcomeChoice.style.transitionDuration = "0.7s";
+        playerOutcomeChoice.classList.remove(`playerOutcomeChoice${playerChoice}`);
+        playerChoice = '';
+        computerOutcomeChoice.style.transitionDuration = "0s";
     }
 });
 
+
+function computerPlay (){ // randomly select a computer choice
+    let x = Math.floor(Math.random() * 3) + 1;
+    if (x == 1) {
+    return "Rock";
+    } else if (x == 2) {
+     return "Paper";
+    } else {
+     return "Scissors";
+    }
+}
 
 
 function playerSelection(selection) {
 
     let playerSelectors = document.querySelectorAll('.playerSelectors')
 
-    let playerSelection= document.querySelector(`#playerSelection${selection}`);
+   // let playerSelection= document.querySelector(`#playerSelection${selection}`);
     playerOutcomeChoice.classList.remove(`playerOutcomeChoiceRock`);
     playerOutcomeChoice.classList.remove(`playerOutcomeChoicePaper`);
     playerOutcomeChoice.classList.remove(`playerOutcomeChoiceScissors`);
@@ -134,6 +107,89 @@ function playerSelection(selection) {
     roundIsActive = true;
     disableSelections();
     
+}
+
+
+
+
+
+function computerSelection (selection){
+
+    let x = 0;
+    
+    
+      let intervalID = setInterval(() =>  {
+
+        if (computerChoiceDisplay == 'Rock') {
+            computerChoiceDisplay = 'Paper';
+            computerOutcomeChoice.classList.add(`computerOutcomeChoicePaper`);
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoiceRock`);  
+        } else if (computerChoiceDisplay == 'Paper') {
+            computerChoiceDisplay = 'Scissors';
+            //computerOutcomeChoice.style.backgroundImage = "url('./images/scissors.png')";
+            computerOutcomeChoice.classList.add(`computerOutcomeChoiceScissors`);
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoicePaper`);
+        } else if (computerChoiceDisplay == 'Scissors') {
+            computerChoiceDisplay = 'Rock';
+            computerOutcomeChoice.classList.add(`computerOutcomeChoiceRock`);
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoiceScissors`);
+            //computerOutcomeChoice.style.backgroundImage = "url('./images/rock.png')";
+        }
+        if (++x === 20) {  
+            clearInterval(intervalID) 
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoiceScissors`);
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoicePaper`);
+            computerOutcomeChoice.classList.remove(`computerOutcomeChoiceRock`);  
+            //computerOutcomeChoice.style.backgroundImage = "url('./images/outcome-placeholder.png')";
+           // computerOutcomeChoice.classList.remove(`computerOutcomeChoice`);   
+            computerOutcomeChoice.classList.add(`computerOutcomeChoice${selection}`);  
+            
+          }  
+
+      }, 100);
+    
+
+}
+
+
+function playRound (playerSelection ,computerSelection) { // compares user's choice with computer & declare's a winner
+    
+
+ /*   while (playerSelection !=='Rock' || playerSelection !=='Paper' || playerSelection !=='Scissors'){
+        if (playerSelection !== null && (playerSelection =='Rock' || playerSelection =='Paper' ||
+                playerSelection =='Scissors')) {
+            break;
+        } else if (playerSelection !== null) {
+            console.log(`"${playerSelection}" is an invalid choice, try again`);
+            playerSelection = playerPlay();
+        } else {
+        playerSelection = null;
+            break;
+        }
+    }   
+*/
+    roundIsActive = true;
+    disableSelections();
+
+
+
+    if (playerSelection=='Rock' && computerSelection=='Paper' ||
+            playerSelection=='Paper' && computerSelection=='Scissors' ||
+            playerSelection=='Scissors' && computerSelection=='Rock') {
+        computerScore++;
+        //console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `You lose this round! ${computerSelection} beats ${playerSelection}`;
+    } else if (playerSelection==computerSelection) {
+       // console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `This round is a tie! You and the computer chose ${playerSelection}`;
+    } else if (playerSelection==null) {
+        return null;
+    } else {
+        playerScore++;
+        //console.log(`The computer chose ${computerSelection} and you choose ${playerSelection}`);
+        return `You won this round! ${playerSelection} beats ${computerSelection}!`;
+        
+    }
 }
 
 
@@ -168,29 +224,37 @@ function enableSelections() {
 
          }
     }
+    computerOutcomeChoice.classList.remove(`computerOutcomeChoice${computerChoice}`);
 }
 
-playerSelectionRockClass.addEventListener('click', function(e) {
+playerSelectionRockClass.addEventListener('click', function() {
     if (!roundIsActive) {
     playerChoice = 'Rock';
+    computerChoice = computerPlay();
+    console.log(computerChoice);
     playerSelection('Rock');
+    computerSelection(computerChoice);
    
 }
     
 });
 
-playerSelectionPaperClass.addEventListener('click', function(e) {
+playerSelectionPaperClass.addEventListener('click', function() {
     if (!roundIsActive) {
         playerChoice = 'Paper';
+        computerChoice = computerPlay();
         playerSelection('Paper');
+        computerSelection(computerChoice);
     }
         
     });
 
-playerSelectionScissorsClass.addEventListener('click', function(e) {
+playerSelectionScissorsClass.addEventListener('click', function() {
     if (!roundIsActive) {
         playerChoice = 'Scissors';
+        computerChoice = computerPlay();
         playerSelection('Scissors');
+        computerSelection(computerChoice);
     }    
             
         });
