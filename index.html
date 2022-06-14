@@ -4,9 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
 </head>
 <body>
-    <script src="./scripts/script.js"></script>
+
+<div class="gameArea">
+    <div class="playArea">
+            <div class="gameTitleArea">
+                <h1 class="gameTitle">Rock, Paper, Scissors</h1>
+            </div>
+            <div class="outcomeArea">
+                <div class="playerOutcomeArea">
+                    <div class="playerOutcomeChoice">
+                        
+                    </div>
+                    <div class="playerOutcomeScore">
+                        <p id="playerScore"></p>
+                    </div>
+                    
+                </div>
+                <div class="computerOutcomeArea">
+                    <div class="computerOutcomeChoice">
+                        
+                    </div>
+                    <div class="computerOutcomeScore">
+                        <p id="computerScore"></p>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="playerSelectionArea">
+                <div id="playerSelectionRock" class="playerSelectionRock playerSelectors">
+                    
+                </div>
+                <div id="playerSelectionPaper" class="playerSelectionPaper playerSelectors">
+                    
+                </div>
+                <div id="playerSelectionScissors" class="playerSelectionScissors playerSelectors">
+                    
+                </div>
+                
+            </div>
+            <div class="restartGame">
+                <button id="restartGame" class="buttons">Restart Game</button>
+            </div>
+            <div id="notice"><p id="msg"></p></div>
+
+            
+            
+            
+            
+        </div>
+        
+        
+
+</div>
+<script src="./scripts/script.js"></script>
+
+
 </body>
 </html>
