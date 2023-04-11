@@ -1,3 +1,7 @@
+### Play demo
+
+https://danielr.io/project/rock-paper-scissors/
+
 ### Description
 
 In this iteration of the classic Rock, Paper, Scissors game, the player competes against the computer, with the winner being declared once one player reaches 5 points.
@@ -8,9 +12,5 @@ In this iteration of the classic Rock, Paper, Scissors game, the player competes
 3. Paper beats rock - 1 point
 4. Rock/Rock, Paper/Paper, and Scissors/Scissors - Tie
 
-
-### Play demo
-
-https://danielr.io/project/rock-paper-scissors/
 
 ![Tux, the Linux mascot](/assets/screenshot-1.png)
